@@ -258,8 +258,8 @@ jobs:
             echo "type=rc" >> $GITHUB_OUTPUT
             echo "Detected [rc] tag - bumping rc version"
           else
-            echo "type=minor" >> $GITHUB_OUTPUT
-            echo "No specific type detected - defaulting to minor version bump"
+            echo "type=patch" >> $GITHUB_OUTPUT
+            echo "No specific type detected - defaulting to patch version bump"
           fi
       
       - name: Bump version

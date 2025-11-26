@@ -139,11 +139,11 @@ This will trigger:
 
 ### Version Bumping (Automatic via CI/CD)
 Commits trigger automatic version bumps:
-- `feat:` → minor bump (v0.1.0 → v0.2.0)
-- `fix:` → patch bump (v0.1.0 → v0.1.1)
-- `feat!:` or `BREAKING CHANGE:` → major bump (v0.1.0 → v1.0.0)
-- `[alpha]` in message → alpha bump (v0.1.0-alpha.1 → v0.1.0-alpha.2)
-- Default → minor bump
+- `feat:` → minor bump (0.0.1 → 0.1.0)
+- `fix:` → patch bump (0.0.1 → 0.0.2)
+- `feat!:` or `BREAKING CHANGE:` → major bump (0.1.0 → 1.0.0)
+- `[alpha]` in message → alpha bump (0.1.0-alpha.1 → 0.1.0-alpha.2)
+- Default → patch bump (0.0.1 → 0.0.2)
 
 ### Files to Always Check
 Before committing, verify these are in sync:
