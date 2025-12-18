@@ -119,11 +119,19 @@ export function formatDelegation(
  */
 export function formatChildLinked(
   childSessionId: string,
-  depth: number
+  depth: number,
+  verbose: boolean = false
 ): string {
-  const indent = '  '.repeat(depth + 1);
-  const shortId = childSessionId.substring(0, 12);
-  return `${indent}   └─ Child session: ${shortId}...`;
+  if (verbose) {
+    // Verbose mode: show full details with indentation
+    const indent = '  '.repeat(depth + 1);
+    const shortId = childSessionId.substring(0, 12);
+    return `${indent}   └─ Child session: ${shortId}...`;
+  } else {
+    // Non-verbose mode: show concise message
+    const shortId = childSessionId.substring(0, 12);
+    return `   → Child agent started (session: ${shortId}...)`;
+  }
 }
 
 /**
@@ -132,11 +140,21 @@ export function formatChildLinked(
 export function formatSessionComplete(
   sessionType: 'PARENT' | 'CHILD',
   duration: number,
-  depth: number
+  depth: number,
+  agent?: string,
+  verbose: boolean = false
 ): string {
-  const indent = '  '.repeat(depth);
-  const durationSec = (duration / 1000).toFixed(1);
-  return `${indent}✅ ${sessionType} COMPLETE (${durationSec}s)\n`;
+  if (verbose) {
+    // Verbose mode: show full details with indentation
+    const indent = '  '.repeat(depth);
+    const durationSec = (duration / 1000).toFixed(1);
+    return `${indent}✅ ${sessionType} COMPLETE (${durationSec}s)\n`;
+  } else {
+    // Non-verbose mode: show concise message for child sessions only
+    const durationSec = (duration / 1000).toFixed(1);
+    const agentName = agent || 'child agent';
+    return `   ✓ Child agent completed (${agentName}, ${durationSec}s)`;
+  }
 }
 
 /**

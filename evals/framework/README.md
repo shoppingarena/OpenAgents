@@ -20,7 +20,15 @@ framework/
 │   │   ├── tool-usage-evaluator.ts
 │   │   ├── behavior-evaluator.ts
 │   │   ├── delegation-evaluator.ts
-│   │   └── stop-on-failure-evaluator.ts
+│   │   ├── stop-on-failure-evaluator.ts
+│   │   └── performance-metrics-evaluator.ts  # NEW
+│   ├── logging/             # Multi-agent logging (NEW)
+│   │   ├── types.ts
+│   │   ├── session-tracker.ts
+│   │   ├── logger.ts
+│   │   ├── formatters.ts
+│   │   ├── index.ts
+│   │   └── __tests__/       # 37 unit tests
 │   ├── collector/           # Session data
 │   │   ├── session-reader.ts
 │   │   └── timeline-builder.ts
@@ -55,6 +63,67 @@ Validates complex tasks are delegated to subagents.
 
 ### stop-on-failure
 Ensures agent stops on errors instead of auto-fixing.
+
+### performance-metrics (NEW)
+Collects performance data for analysis:
+- Total test duration
+- Tool latencies (avg, min, max per tool)
+- LLM inference time estimation
+- Idle time between events
+- Event distribution
+
+Always passes - used for metrics collection only.
+
+## Multi-Agent Logging (NEW)
+
+The framework now includes comprehensive multi-agent logging that tracks delegation hierarchies in real-time.
+
+### Features
+- **Visual hierarchy** - Box characters and indentation show parent-child relationships (debug mode)
+- **Session tracking** - Tracks all sessions (parent, child, grandchild, etc.)
+- **Real-time capture** - Hooks into SDK event stream for live updates
+- **Non-verbose mode** - Shows child agent execution in normal mode without full debug output
+- **Verbose mode** - Full delegation hierarchy with `--debug` flag
+
+### Usage
+```bash
+# Non-verbose mode (default) - shows child agent completion
+npm run eval:sdk -- --agent=openagent --pattern="**/test.yaml"
+
+# Verbose mode (debug) - shows full delegation hierarchy
+npm run eval:sdk -- --agent=openagent --pattern="**/test.yaml" --debug
+```
+
+### Example Output (Non-Verbose Mode)
+```
+Running tests...
+
+   ✓ Child agent completed (OpenAgent, 2.9s)
+
+Running evaluator: approval-gate...
+```
+
+### Example Output (Verbose Mode - Debug)
+```
+┌────────────────────────────────────────────────────────────┐
+│ 🎯 PARENT: OpenAgent (ses_xxx...)                          │
+└────────────────────────────────────────────────────────────┘
+  🔧 TOOL: task
+     ├─ subagent: simple-responder
+     └─ Creating child session...
+
+  ┌────────────────────────────────────────────────────────────┐
+  │ 🎯 CHILD: simple-responder (ses_yyy...)                    │
+  │    Parent: ses_xxx...                                      │
+  │    Depth: 1                                                │
+  └────────────────────────────────────────────────────────────┘
+    🤖 Agent: AWESOME TESTING
+  ✅ CHILD COMPLETE (2.9s)
+
+✅ PARENT COMPLETE (20.9s)
+```
+
+See [src/logging/README.md](src/logging/README.md) for API documentation.
 
 ## Adding an Evaluator
 

@@ -32,6 +32,7 @@ import { CleanupConfirmationEvaluator } from '../evaluators/cleanup-confirmation
 import { ExecutionBalanceEvaluator } from '../evaluators/execution-balance-evaluator.js';
 import { BehaviorEvaluator } from '../evaluators/behavior-evaluator.js';
 import { PerformanceMetricsEvaluator } from '../evaluators/performance-metrics-evaluator.js';
+import { AgentModelEvaluator } from '../evaluators/agent-model-evaluator.js';
 import { TestExecutor } from './test-executor.js';
 import { ResultValidator } from './result-validator.js';
 import { createLogger } from './event-logger.js';
@@ -362,11 +363,11 @@ If you see this prompt during a test run, something went wrong with the test set
     this.client = new ClientManager({ baseUrl: url });
     this.eventHandler = new EventStreamHandler(url);
 
-    // Initialize multi-agent logger in debug mode
+    // Initialize multi-agent logger (always enabled, verbose only in debug mode)
+    this.multiAgentLogger = new MultiAgentLogger(true, this.config.debug);
+    this.eventHandler.setMultiAgentLogger(this.multiAgentLogger);
     if (this.config.debug) {
-      this.multiAgentLogger = new MultiAgentLogger(true);
-      this.eventHandler.setMultiAgentLogger(this.multiAgentLogger);
-      console.log('[TestRunner] Multi-agent logging enabled');
+      console.log('[TestRunner] Multi-agent logging enabled (verbose mode)');
     }
 
     // Create executor
@@ -413,6 +414,7 @@ If you see this prompt during a test run, something went wrong with the test set
         new CleanupConfirmationEvaluator(),
         new ExecutionBalanceEvaluator(),
         new PerformanceMetricsEvaluator(),
+        new AgentModelEvaluator({ projectPath: this.config.projectPath }), // Logs agent/model info
       ],
     });
 
@@ -514,11 +516,71 @@ If you see this prompt during a test run, something went wrong with the test set
         const contextEvaluator = new ContextLoadingEvaluator(testCase.behavior);
         this.evaluatorRunner.register(contextEvaluator);
       }
+
+      // If behavior specifies agent/model expectations, replace agent-model evaluator with configured one
+      if (testCase.behavior.expectedAgent || testCase.behavior.expectedModel) {
+        this.logger.log(`Logging agent/model info: ${testCase.behavior.expectedAgent || 'any'} / ${testCase.behavior.expectedModel || 'any'}`);
+        this.evaluatorRunner.unregister('agent-model');
+        const agentModelEvaluator = new AgentModelEvaluator({
+          expectedAgent: testCase.behavior.expectedAgent,
+          expectedModel: testCase.behavior.expectedModel,
+          projectPath: this.config.projectPath,
+        });
+        this.evaluatorRunner.register(agentModelEvaluator);
+      }
     }
     
     try {
       const evaluation = await this.evaluatorRunner.runAll(sessionId);
       this.logger.log(`Evaluators completed: ${evaluation.totalViolations} violations found`);
+      
+      // Log agent-model info if available
+      const agentModelResult = evaluation.evaluatorResults.find((r: any) => r.evaluator === 'agent-model');
+      if (agentModelResult && agentModelResult.metadata?.actualAgent) {
+        const agent = agentModelResult.metadata.actualAgent;
+        this.logger.log(`\n${'─'.repeat(60)}`);
+        this.logger.log(`📋 Agent/Model Info:`);
+        this.logger.log(`   Agent: ${agent.name || agent.id || 'unknown'} (${agent.id || 'no-id'})`);
+        this.logger.log(`   Category: ${agent.category || 'unknown'} | Type: ${agent.type || 'unknown'}`);
+        this.logger.log(`   Version: ${agent.version || 'unknown'} | Mode: ${agent.mode || 'unknown'}`);
+        if (agent.description) {
+          this.logger.log(`   Description: ${agent.description}`);
+        }
+        if (agent.promptSnippet) {
+          this.logger.log(`   Prompt: "${agent.promptSnippet.substring(0, 100)}..."`);
+        }
+        if (agentModelResult.metadata.expectedAgent || agentModelResult.metadata.expectedModel) {
+          this.logger.log(`   Expected: ${agentModelResult.metadata.expectedAgent || 'any'} / ${agentModelResult.metadata.expectedModel || 'any'}`);
+        }
+        this.logger.log(`${'─'.repeat(60)}\n`);
+      }
+      
+      // Log delegation info if available
+      const delegationResult = evaluation.evaluatorResults.find((r: any) => r.evaluator === 'delegation');
+      
+      // Check allEvidence for task tool calls
+      const taskToolEvidence = evaluation.allEvidence.find((e: any) => 
+        e.type === 'task-tool-call' || e.description?.includes('Task tool call')
+      );
+      
+      if (taskToolEvidence) {
+        this.logger.log(`\n${'─'.repeat(60)}`);
+        this.logger.log(`🔄 Delegation Summary:`);
+        this.logger.log(`   ${taskToolEvidence.description}`);
+        if (taskToolEvidence.data) {
+          if (taskToolEvidence.data.subagent_type) {
+            this.logger.log(`   Subagent: ${taskToolEvidence.data.subagent_type}`);
+          }
+          if (taskToolEvidence.data.description) {
+            this.logger.log(`   Description: ${taskToolEvidence.data.description}`);
+          }
+          if (taskToolEvidence.data.prompt) {
+            const prompt = taskToolEvidence.data.prompt.substring(0, 150);
+            this.logger.log(`   Prompt: "${prompt}${taskToolEvidence.data.prompt.length > 150 ? '...' : ''}"`);
+          }
+        }
+        this.logger.log(`${'─'.repeat(60)}\n`);
+      }
       
       if (evaluation && evaluation.totalViolations > 0) {
         this.logger.log(`  Errors: ${evaluation.violationsBySeverity.error}`);
@@ -533,6 +595,12 @@ If you see this prompt during a test run, something went wrong with the test set
         if (testCase.behavior.expectedContextFiles && testCase.behavior.expectedContextFiles.length > 0) {
           this.evaluatorRunner.unregister('context-loading');
           this.evaluatorRunner.register(new ContextLoadingEvaluator());
+        }
+
+        // Restore default agent-model evaluator if we replaced it
+        if (testCase.behavior.expectedAgent || testCase.behavior.expectedModel) {
+          this.evaluatorRunner.unregister('agent-model');
+          this.evaluatorRunner.register(new AgentModelEvaluator({ projectPath: this.config.projectPath }));
         }
       }
 
@@ -560,6 +628,20 @@ If you see this prompt during a test run, something went wrong with the test set
     if (evaluation) {
       this.logger.log(`Evaluation Score: ${evaluation.overallScore}/100`);
       this.logger.log(`Violations: ${evaluation.totalViolations} (E:${evaluation.violationsBySeverity.error} W:${evaluation.violationsBySeverity.warning})`);
+      
+      // Log violation details if any
+      if (evaluation.totalViolations > 0) {
+        this.logger.log(`\n${'─'.repeat(60)}`);
+        this.logger.log(`⚠️  Violation Details:`);
+        evaluation.allViolations.forEach((v: any, i: number) => {
+          const icon = v.severity === 'error' ? '❌' : v.severity === 'warning' ? '⚠️' : 'ℹ️';
+          this.logger.log(`   ${i + 1}. ${icon} [${v.rule || v.type}] ${v.message}`);
+          if (v.context) {
+            this.logger.log(`      Context: ${JSON.stringify(v.context)}`);
+          }
+        });
+        this.logger.log(`${'─'.repeat(60)}\n`);
+      }
     }
   }
 

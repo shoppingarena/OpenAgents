@@ -47,8 +47,9 @@ evals/framework/src/logging/
 ```typescript
 import { MultiAgentLogger } from './logging/index.js';
 
-// Create logger
-const logger = new MultiAgentLogger(true);
+// Create logger (enabled, verbose)
+const logger = new MultiAgentLogger(true, false); // Non-verbose mode
+// const logger = new MultiAgentLogger(true, true); // Verbose mode (debug)
 
 // Log parent session
 logger.logSessionStart('ses_parent_123', 'openagent');
@@ -73,7 +74,7 @@ logger.logSessionComplete('ses_child_456');
 logger.logSessionComplete('ses_parent_123');
 ```
 
-### Output
+### Output (Verbose Mode - Debug)
 
 ```
 ┌────────────────────────────────────────────────────────────┐
@@ -97,6 +98,19 @@ logger.logSessionComplete('ses_parent_123');
 
 ✅ PARENT COMPLETE (29.4s)
 ```
+
+### Output (Non-Verbose Mode - Default)
+
+```
+Running tests...
+
+   → Child agent started (session: ses_child_45...)
+   ✓ Child agent completed (OpenAgent, 2.5s)
+
+Running evaluator: approval-gate...
+```
+
+In non-verbose mode, only child session lifecycle events are shown, providing visibility into delegation without overwhelming output.
 
 ---
 
