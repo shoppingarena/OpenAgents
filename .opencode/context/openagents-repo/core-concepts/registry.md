@@ -7,7 +7,7 @@
 
 ## What Is the Registry?
 
-The registry is a centralized catalog (`registry.json`) that tracks all components in OpenAgents:
+The registry is a centralized catalog (`registry.json`) that tracks all components in OpenAgents Control:
 - **Agents** - AI agent prompts
 - **Subagents** - Delegated specialists
 - **Commands** - Slash commands
@@ -151,6 +151,30 @@ ERROR: Duplicate ID: frontend-specialist
 ERROR: Invalid category: invalid-category
 ERROR: Missing dependency: subagent:nonexistent
 ```
+
+---
+
+## Agents vs Subagents
+
+**Main Agents** (2 in Developer profile):
+- openagent: Universal coordination agent
+- opencoder: Complex coding and architecture
+
+**Specialist Subagents** (8 in Developer profile):
+- frontend-specialist: React, Vue, CSS architecture
+- devops-specialist: CI/CD, infrastructure, deployment
+- openimplementer: Lightweight implementation (1-4 files, <60 min)
+- task-manager: Feature breakdown and planning
+- documentation: Create and update docs
+- coder-agent: Execute coding subtasks
+- reviewer: Code review and security
+- tester: Write unit and integration tests
+- build-agent: Type checking and validation
+- image-specialist: Generate and edit images
+
+**Commands** (7 in Developer profile):
+- analyze-patterns: Analyze codebase for patterns
+- commit, test, context, clean, optimize, validate-repo
 
 ---
 
@@ -461,5 +485,5 @@ jq '.version = "0.X.Y"' registry.json > tmp && mv tmp registry.json
 
 ---
 
-**Last Updated**: 2025-12-10  
-**Version**: 0.5.0
+**Last Updated**: 2025-01-28  
+**Version**: 0.5.2

@@ -1,4 +1,4 @@
-# Contributing to OpenAgents
+# Contributing to OpenAgents Control
 
 Thank you for your interest in contributing! This guide will help you add new components to the registry and understand the repository structure.
 
@@ -96,7 +96,13 @@ All markdown files should include YAML frontmatter:
 
 ```markdown
 ---
+id: devops-specialist
+name: DevOps Specialist
 description: "Brief description of what this does"
+category: development
+type: standard
+version: 1.0.0
+author: community
 mode: primary  # For agents only
 temperature: 0.1  # Optional - for agents only
 tools:  # For agents only

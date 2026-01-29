@@ -60,7 +60,7 @@ test_no_collisions() {
     
     for file in "${files[@]}"; do
         if [ -f "$file" ]; then
-            ((collisions++))
+            ((collisions+=1))
         fi
     done
     
@@ -228,7 +228,8 @@ test_backup_strategy() {
     echo "original content" > .opencode/agent/test.md
     
     # Simulate backup
-    local backup_dir=".opencode.backup.$(date +%Y%m%d-%H%M%S)"
+    local backup_dir
+    backup_dir=".opencode.backup.$(date +%Y%m%d-%H%M%S)"
     local file=".opencode/agent/test.md"
     local backup_file="${backup_dir}/${file}"
     

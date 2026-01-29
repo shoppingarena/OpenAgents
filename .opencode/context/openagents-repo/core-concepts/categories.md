@@ -23,24 +23,24 @@ Categories are domain-based groupings that organize agents, context files, and t
 **Purpose**: Essential system agents (always available)
 
 **Agents**:
-- openagent, opencoder, system-builder
+- openagent, opencoder, openimplementer, system-builder
 
-**When to use**: System-level tasks, orchestration
+**When to use**: System-level tasks, orchestration, coding (simple or complex)
 
 **Status**: ✅ Stable
 
 ---
 
-### Development (`development/`)
-**Purpose**: Software development specialists
+### Development Subagents (`subagents/development/`)
+**Purpose**: Domain-specific development specialists (invoked by core agents)
 
-**Agents**:
-- frontend-specialist, backend-specialist, devops-specialist, codebase-agent
+**Subagents**:
+- frontend-specialist, devops-specialist
 
 **Context**:
 - clean-code.md, react-patterns.md, api-design.md
 
-**When to use**: Building applications, dev tasks
+**When to use**: Delegated frontend, backend, or DevOps tasks within a larger workflow
 
 **Status**: ✅ Active
 
@@ -53,7 +53,10 @@ Categories are domain-based groupings that organize agents, context files, and t
 - copywriter, technical-writer
 
 **Context**:
-- copywriting-frameworks.md, tone-voice.md
+- copywriting-frameworks.md
+- tone-voice.md
+- audience-targeting.md
+- hooks.md
 
 **When to use**: Writing, documentation, marketing
 
@@ -76,34 +79,6 @@ Categories are domain-based groupings that organize agents, context files, and t
 
 ---
 
-### Product (`product/`)
-**Purpose**: Product management specialists
-
-**Agents**:
-- (Ready for product agents)
-
-**Context**:
-- (Ready for product context)
-
-**When to use**: Product strategy, roadmaps, requirements
-
-**Status**: 🟡 Ready (no agents yet)
-
----
-
-### Learning (`learning/`)
-**Purpose**: Education and coaching specialists
-
-**Agents**:
-- (Ready for learning agents)
-
-**Context**:
-- (Ready for learning context)
-
-**When to use**: Teaching, training, curriculum
-
-**Status**: 🟡 Ready (no agents yet)
-
 ---
 
 ## Category Structure
@@ -118,27 +93,25 @@ Categories are domain-based groupings that organize agents, context files, and t
 evals/agents/{category}/        # Tests by category
 ```
 
-### Example: Development Category
+### Example: Core Agents + Development Subagents
 
 ```
-.opencode/agent/development/
+.opencode/agent/core/
 ├── 0-category.json             # Category metadata
+├── openagent.md
+├── opencoder.md
+└── openimplementer.md
+
+.opencode/agent/subagents/development/
+├── 0-category.json             # Subagent category metadata
 ├── frontend-specialist.md
-├── backend-specialist.md
-├── devops-specialist.md
-└── codebase-agent.md
+└── devops-specialist.md
 
 .opencode/context/development/
-├── README.md
+├── navigation.md
 ├── clean-code.md
 ├── react-patterns.md
 └── api-design.md
-
-evals/agents/development/
-├── frontend-specialist/
-├── backend-specialist/
-├── devops-specialist/
-└── codebase-agent/
 ```
 
 ---
@@ -208,11 +181,11 @@ The system resolves agent paths flexibly:
 # Short ID (backward compatible)
 "openagent" → ".opencode/agent/core/openagent.md"
 
-# Category path
-"development/frontend-specialist" → ".opencode/agent/development/frontend-specialist.md"
+# Subagent path
+"subagents/development/frontend-specialist" → ".opencode/agent/subagents/development/frontend-specialist.md"
 
 # Subagent path
-"subagents/code/tester" → ".opencode/agent/subagents/code/tester.md"
+"TestEngineer" → ".opencode/agent/TestEngineer.md"
 ```
 
 ---
@@ -249,7 +222,7 @@ EOF
 ### Step 3: Add Context README
 
 ```bash
-cat > .opencode/context/{category}/README.md << 'EOF'
+cat > .opencode/context/{category}/navigation.md << 'EOF'
 # Category Name Context
 
 Context files for {category} specialists.
@@ -316,7 +289,7 @@ EOF
 
 ```
 .opencode/context/{category}/
-├── README.md               # Overview
+├── navigation.md               # Overview
 ├── {topic-1}.md           # Specific topic
 ├── {topic-2}.md           # Specific topic
 └── {topic-3}.md           # Specific topic
@@ -377,9 +350,15 @@ Loads: `.opencode/context/development/react-patterns.md`
 .opencode/agent/
 ├── core/
 │   ├── openagent.md
-│   └── opencoder.md
-├── development/
-│   └── frontend-specialist.md
+│   ├── opencoder.md
+│   └── openimplementer.md
+├── subagents/
+│   ├── development/
+│   │   ├── frontend-specialist.md
+│   │   └── devops-specialist.md
+│   └── code/
+│       ├── coder-agent.md
+│       └── tester.md
 └── content/
     └── copywriter.md
 ```
@@ -391,20 +370,29 @@ Old paths still work:
 - `opencoder` → resolves to `core/opencoder`
 
 New agents use category paths:
-- `development/frontend-specialist`
+- `subagents/development/frontend-specialist`
 - `content/copywriter`
 
 ---
 
 ## Common Patterns
 
-### Category with Multiple Agents
+### Core Category with Multiple Agents
 
 ```
-development/
+core/
+├── 0-category.json
+├── openagent.md
+├── opencoder.md
+└── openimplementer.md
+```
+
+### Development Subagents
+
+```
+subagents/development/
 ├── 0-category.json
 ├── frontend-specialist.md
-├── backend-specialist.md
 └── devops-specialist.md
 ```
 
@@ -412,7 +400,7 @@ development/
 
 ```
 context/development/
-├── README.md
+├── navigation.md
 ├── clean-code.md
 ├── react-patterns.md
 └── api-design.md
@@ -421,12 +409,12 @@ context/development/
 ### Category with Tests
 
 ```
-evals/agents/development/
-├── frontend-specialist/
+evals/agents/core/
+├── openagent/
 │   ├── config/config.yaml
 │   └── tests/smoke-test.yaml
-├── backend-specialist/
-└── devops-specialist/
+├── opencoder/
+└── openimplementer/
 ```
 
 ---
@@ -437,8 +425,9 @@ evals/agents/development/
 - **Adding categories**: `guides/add-category.md`
 - **Agent concepts**: `core-concepts/agents.md`
 - **File locations**: `lookup/file-locations.md`
+- **Content creation principles**: `../content-creation/principles/navigation.md`
 
 ---
 
-**Last Updated**: 2025-12-10  
-**Version**: 0.5.0
+**Last Updated**: 2026-01-13  
+**Version**: 0.5.1

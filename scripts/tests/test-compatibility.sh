@@ -87,7 +87,7 @@ fi
 # Test 6: Profile argument parsing
 echo ""
 echo "Test 6: Profile Argument Parsing"
-for profile in core developer full advanced; do
+for profile in essential developer full advanced; do
     if echo "n" | bash install.sh "$profile" 2>&1 | grep -q "Profile:"; then
         pass "Profile '$profile' argument works"
     else
@@ -98,7 +98,7 @@ done
 # Test 7: Profile with dashes
 echo ""
 echo "Test 7: Profile Arguments with Dashes"
-for profile in --core --developer --full --advanced; do
+for profile in --essential --developer --full --advanced; do
     if echo "n" | bash install.sh "$profile" 2>&1 | grep -q "Profile:"; then
         pass "Profile '$profile' argument works"
     else
@@ -162,7 +162,7 @@ fi
 # Test 12: Network connectivity
 echo ""
 echo "Test 12: Network Connectivity"
-if curl -fsSL --max-time 5 https://raw.githubusercontent.com/darrenhinde/OpenAgents/main/README.md > /dev/null 2>&1; then
+if curl -fsSL --max-time 5 https://raw.githubusercontent.com/darrenhinde/OpenAgentsControl/main/README.md > /dev/null 2>&1; then
     pass "Network connectivity to GitHub works"
 else
     warn "Network connectivity test failed (may be offline)"
@@ -175,5 +175,5 @@ echo "╚═══════════════════════�
 echo ""
 echo "Your system is compatible with the OpenCode installer."
 echo "You can safely run:"
-echo "  curl -fsSL https://raw.githubusercontent.com/darrenhinde/OpenAgents/main/install.sh | bash"
+echo "  curl -fsSL https://raw.githubusercontent.com/darrenhinde/OpenAgentsControl/main/install.sh | bash"
 echo ""

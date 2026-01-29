@@ -2,7 +2,7 @@
 description: Smart commit command for opencode-agents repository with automatic validation and conventional commits
 ---
 
-# Commit OpenAgents Command
+# Commit OpenAgents Control Command
 
 You are an AI agent that helps create well-formatted git commits specifically for the **opencode-agents** repository. This command handles the complete commit workflow including validation, testing, and pushing changes.
 
@@ -101,12 +101,9 @@ cd evals/framework && npm run eval:sdk -- --agent=core/opencoder --pattern="**/s
 **Auto-stage based on change type:**
 - If modifying evals framework → stage `evals/framework/`
 - If modifying core agents → stage `.opencode/agent/core/`
-- If modifying development agents → stage `.opencode/agent/development/`
 - If modifying content agents → stage `.opencode/agent/content/`
 - If modifying data agents → stage `.opencode/agent/data/`
 - If modifying meta agents → stage `.opencode/agent/meta/`
-- If modifying learning agents → stage `.opencode/agent/learning/`
-- If modifying product agents → stage `.opencode/agent/product/`
 - If modifying subagents → stage `.opencode/agent/subagents/`
 - If modifying commands → stage `.opencode/command/`
 - If modifying context → stage `.opencode/context/`
@@ -142,15 +139,13 @@ cd evals/framework && npm run eval:sdk -- --agent=core/opencoder --pattern="**/s
 
 **Scopes for this repo:**
 - `evals` - Evaluation framework changes
-- `agents/core` - Core agents (openagent, opencoder)
+- `agents/core` - Core agents (openagent, opencoder, openimplementer)
 - `agents/meta` - Meta agents (system-builder, repo-manager)
-- `agents/development` - Development category agents (frontend-specialist, backend-specialist, devops-specialist, codebase-agent)
 - `agents/content` - Content category agents (copywriter, technical-writer)
 - `agents/data` - Data category agents (data-analyst)
-- `agents/learning` - Learning category agents
-- `agents/product` - Product category agents
-- `subagents/core` - Core subagents (task-manager, documentation, context-retriever)
-- `subagents/code` - Code subagents (coder-agent, tester, reviewer, build-agent, codebase-pattern-analyst)
+- `subagents/core` - Core subagents (task-manager, documentation, contextscout, externalscout)
+- `subagents/code` - Code subagents (coder-agent, tester, reviewer, build-agent)
+- `subagents/development` - Development specialist subagents (frontend-specialist, devops-specialist)
 - `subagents/system-builder` - System builder subagents (domain-analyzer, agent-generator, context-organizer, workflow-designer, command-creator)
 - `subagents/utils` - Utility subagents (image-specialist)
 - `commands` - Slash command changes
@@ -164,7 +159,7 @@ cd evals/framework && npm run eval:sdk -- --agent=core/opencoder --pattern="**/s
 ```
 feat(evals): add parallel test execution support
 fix(agents/core): correct delegation logic in openagent
-fix(agents/development): update frontend-specialist validation rules
+fix(subagents/development): update frontend-specialist validation rules
 feat(agents/content): add new copywriter capabilities
 feat(agents/meta): enhance system-builder with new templates
 refactor(evals): split test-runner into modular components
@@ -326,7 +321,7 @@ When new workflows are added, offer to update documentation:
 
 Would you like to:
 1. Add entry to .github/workflows/WORKFLOW_AUDIT.md
-2. Update README.md with workflow info
+2. Update navigation.md with workflow info
 3. Skip documentation (do it later)
 ```
 

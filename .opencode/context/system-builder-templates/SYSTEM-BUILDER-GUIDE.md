@@ -1,3 +1,7 @@
+---
+description: "Complete guide for using the /build-context-system command to create custom context-aware AI systems"
+---
+
 # System Builder Guide
 
 Complete guide for using the `/build-context-system` command to create custom context-aware AI systems.
@@ -5,6 +9,7 @@ Complete guide for using the `/build-context-system` command to create custom co
 ## Overview
 
 The system builder creates complete `.opencode` folder architectures tailored to your domain and use cases. It follows research-backed patterns from Stanford and Anthropic for optimal AI agent performance.
+---
 
 ## Quick Start
 
@@ -41,7 +46,7 @@ This launches an interactive interview that guides you through:
 ├── command/
 │   ├── {command-1}.md
 │   └── {command-2}.md
-├── README.md                         # System overview
+├── navigation.md                         # System overview
 ├── ARCHITECTURE.md                   # Architecture guide
 ├── TESTING.md                        # Testing checklist
 └── QUICK-START.md                    # Usage examples
@@ -407,7 +412,7 @@ After generation, you can customize:
 
 ### Getting Help
 
-1. Review generated documentation (README.md, ARCHITECTURE.md)
+1. Review generated documentation (navigation.md, ARCHITECTURE.md)
 2. Check TESTING.md for testing guidance
 3. Review QUICK-START.md for usage examples
 4. Examine template files for patterns
@@ -440,7 +445,7 @@ After generation, you can customize:
 
 After your system is generated:
 
-1. **Review the documentation**: Start with README.md
+1. **Review the documentation**: Start with navigation.md
 2. **Test basic functionality**: Try simple commands
 3. **Customize context**: Add your domain knowledge
 4. **Run through testing checklist**: Ensure quality
@@ -450,7 +455,7 @@ After your system is generated:
 
 - **Templates**: `.opencode/context/system-builder-templates/`
 - **Examples**: See generated systems for reference
-- **Documentation**: README.md, ARCHITECTURE.md, TESTING.md
+- **Documentation**: navigation.md, ARCHITECTURE.md, TESTING.md
 - **Patterns**: Review template files for best practices
 
 ---

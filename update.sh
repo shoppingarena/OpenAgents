@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #############################################################################
-# OpenAgents Updater
+# OpenAgents Control Updater
 # Updates existing OpenCode components to latest versions
 #############################################################################
 
@@ -9,13 +9,13 @@ set -e
 
 # Colors
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
+# YELLOW='\033[1;33m' # Unused
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 BOLD='\033[1m'
 NC='\033[0m'
 
-REPO_URL="https://raw.githubusercontent.com/darrenhinde/OpenAgents/main"
+REPO_URL="https://raw.githubusercontent.com/darrenhinde/OpenAgentsControl/main"
 INSTALL_DIR=".opencode"
 
 print_success() { echo -e "${GREEN}✓${NC} $1"; }
@@ -26,7 +26,7 @@ print_header() {
     echo -e "${CYAN}${BOLD}"
     echo "╔════════════════════════════════════════════════════════════════╗"
     echo "║                                                                ║"
-    echo "║           OpenAgents Updater v1.0.0                           ║"
+    echo "║           OpenAgents Control Updater v1.0.0                   ║"
     echo "║                                                                ║"
     echo "╚════════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"

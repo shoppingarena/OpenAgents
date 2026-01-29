@@ -1,6 +1,6 @@
 # Core Concept: Agents
 
-**Purpose**: Understanding how agents work in OpenAgents  
+**Purpose**: Understanding how agents work in OpenAgents Control  
 **Priority**: CRITICAL - Load this before working with agents
 
 ---
@@ -71,9 +71,8 @@ Agents:
 
 Agents:
 - `frontend-specialist.md` - React, Vue, modern CSS
-- `backend-specialist.md` - APIs, databases, servers
 - `devops-specialist.md` - CI/CD, deployment, infrastructure
-- `codebase-agent.md` - Codebase exploration and analysis
+- `openimplementer.md` - Lightweight implementation (1-4 files, <60 min)
 
 **When to use**: Building applications, dev tasks
 
@@ -131,7 +130,6 @@ Agents:
    - `reviewer.md` - Code review and security
    - `coder-agent.md` - Focused implementations
    - `build-agent.md` - Type checking and builds
-   - `codebase-pattern-analyst.md` - Pattern analysis
 
 2. **core/** - Core workflow specialists
    - `task-manager.md` - Task breakdown and management
@@ -158,6 +156,19 @@ Agents:
 
 ---
 
+## Claude Code Interop (Optional)
+
+OpenAgents Control can pair with Claude Code for local workflows and distribution:
+
+- **Subagents**: Project helpers in `.claude/agents/`
+- **Skills**: Auto-invoked guidance in `.claude/skills/`
+- **Hooks**: Shell commands on lifecycle events (use sparingly)
+- **Plugins**: Share agents/skills/hooks across projects
+
+Use this when you want Claude Code to follow OpenAgents Control standards or to ship reusable helpers.
+
+---
+
 ## Path Resolution
 
 The system supports multiple path formats for backward compatibility:
@@ -175,7 +186,7 @@ The system supports multiple path formats for backward compatibility:
 "development/frontend-specialist" → resolves to → ".opencode/agent/development/frontend-specialist.md"
 
 # Subagent path
-"subagents/code/tester" → resolves to → ".opencode/agent/subagents/code/tester.md"
+"TestEngineer" → resolves to → ".opencode/agent/TestEngineer.md"
 ```
 
 ### Resolution Rules
@@ -222,7 +233,7 @@ Agents should load relevant context files based on task type:
 <!-- Context: standards/code | Priority: critical -->
 ```
 
-Loads: `.opencode/context/core/standards/code.md`
+Loads: `.opencode/context/core/standards/code-quality.md`
 
 ### Category Context
 
@@ -314,14 +325,14 @@ dependencies: ["Optional - e.g., 'subagent:tester'"]
 ```markdown
 When task requires testing:
 1. Implement feature
-2. Delegate to subagents/code/tester for test creation
+2. Delegate to TestEngineer for test creation
 ```
 
 ### Context Loading
 
 ```markdown
 Before implementing:
-1. Load core/standards/code.md
+1. Load core/standards/code-quality.md
 2. Load category-specific context if available
 3. Apply standards to implementation
 ```
@@ -343,8 +354,12 @@ Before execution:
 - **Testing agents**: `guides/testing-agent.md`
 - **Category system**: `core-concepts/categories.md`
 - **File locations**: `lookup/file-locations.md`
+- **Claude Code subagents**: `../to-be-consumed/claude-code-docs/create-subagents.md`
+- **Claude Code skills**: `../to-be-consumed/claude-code-docs/agent-skills.md`
+- **Claude Code hooks**: `../to-be-consumed/claude-code-docs/hooks.md`
+- **Claude Code plugins**: `../to-be-consumed/claude-code-docs/plugins.md`
 
 ---
 
-**Last Updated**: 2025-12-10  
-**Version**: 0.5.0
+**Last Updated**: 2026-01-13  
+**Version**: 0.5.1
