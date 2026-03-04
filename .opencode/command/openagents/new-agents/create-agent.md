@@ -50,15 +50,8 @@ Create a new agent with minimal, high-signal prompts following "right altitude" 
     description: "{one-line purpose}"
     mode: primary
     temperature: 0.1-0.7
-    tools:
-      read: true
-      write: true
-      edit: true
-      bash: true
-      task: {only if delegates}
-      glob: true
-      grep: true
-    permissions:
+
+    permission:
       bash:
         "rm -rf *": "ask"
         "sudo *": "deny"
@@ -475,6 +468,6 @@ Create a new agent with minimal, high-signal prompts following "right altitude" 
   <examples>
     - `.opencode/agent/core/opencoder.md` - Development specialist example
     - `.opencode/agent/core/openagent.md` - Universal orchestrator example
-    - `.opencode/agent/development/frontend-specialist.md` - Category agent example
+    - `.opencode/agent/subagents/development/frontend-specialist.md` - Category agent example
   </examples>
 </references>

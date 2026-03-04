@@ -1,8 +1,10 @@
+<!-- Context: development/clean-code | Priority: low | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Clean Code Principles
 
 **Category**: development  
 **Purpose**: Core coding standards and best practices for writing clean, maintainable code  
-**Used by**: frontend-specialist, devops-specialist, opencoder, openimplementer
+**Used by**: frontend-specialist, devops-specialist, opencoder
 
 ---
 

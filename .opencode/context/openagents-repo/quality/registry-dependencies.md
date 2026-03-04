@@ -127,7 +127,7 @@ Dependency:    context:core/standards/code
 dependencies:
   - context:core/standards/code           # .opencode/context/core/standards/code-quality.md
   - context:core/standards/docs           # .opencode/context/core/standards/documentation.md
-  - context:core/workflows/delegation     # .opencode/context/core/workflows/task-delegation.md
+  - context:core/workflows/delegation     # .opencode/context/core/workflows/task-delegation-basics.md
   - context:openagents-repo/guides/adding-agent  # Project-specific context
 ```
 
@@ -562,7 +562,7 @@ jobs:
 
 - **Registry Guide**: `.opencode/context/openagents-repo/guides/updating-registry.md`
 - **Registry Concepts**: `.opencode/context/openagents-repo/core-concepts/registry.md`
-- **Adding Agents**: `.opencode/context/openagents-repo/guides/adding-agent.md`
+- **Adding Agents**: `.opencode/context/openagents-repo/guides/adding-agent-basics.md`
 - **Command Reference**: `/check-context-deps` command
 
 ---

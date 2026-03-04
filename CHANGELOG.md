@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+## [0.7.1] - 2026-01-30
+
+### Changes
+- feat: Context path configuration and documentation reorganization (#143)
+
 ## [0.7.0] - 2026-01-29
 
 ### Changes
@@ -12,7 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Documentation
 - Updated README.md and QUICK_START.md for v0.6.0 accuracy
   - Updated version from 0.1.0-alpha.1 to 0.6.0
-  - Added OpenImplementer agent to main agents list
+  - Simplified agent architecture (OpenAgent + OpenCoder)
   - Completed commands list with /analyze-patterns, /commit-openagents, /build-context-system
   - Highlighted ExternalScout with 18+ supported libraries
   - Updated installation profiles to mention new agents
@@ -28,9 +33,9 @@ All notable changes to this project will be documented in this file.
   - Added to registry with `skill:context7` dependency
 
 - **Context7 Skill**: Registered in system for external documentation fetching
-  - Path: `.opencode/skill/context7/SKILLS.MD`
-  - Library registry: `.opencode/skill/context7/library-registry.md`
-  - Navigation guide: `.opencode/skill/context7/navigation.md`
+  - Path: `.opencode/skills/context7/SKILL.md`
+  - Library registry: `.opencode/skills/context7/library-registry.md`
+  - Navigation guide: `.opencode/skills/context7/navigation.md`
 
 ### Changed
 - **ContextScout v5.1.0**: Optimized with research-backed prompt engineering patterns

@@ -72,7 +72,6 @@ Agents:
 Agents:
 - `frontend-specialist.md` - React, Vue, modern CSS
 - `devops-specialist.md` - CI/CD, deployment, infrastructure
-- `openimplementer.md` - Lightweight implementation (1-4 files, <60 min)
 
 **When to use**: Building applications, dev tasks
 
@@ -183,10 +182,10 @@ The system supports multiple path formats for backward compatibility:
 "core/openagent" → resolves to → ".opencode/agent/core/openagent.md"
 
 # Full category path
-"development/frontend-specialist" → resolves to → ".opencode/agent/development/frontend-specialist.md"
+"development/frontend-specialist" → resolves to → ".opencode/agent/subagents/development/frontend-specialist.md"
 
 # Subagent path
-"TestEngineer" → resolves to → ".opencode/agent/TestEngineer.md"
+"TestEngineer" → resolves to → ".opencode/agent/subagents/code/test-engineer.md"
 ```
 
 ### Resolution Rules
@@ -241,7 +240,7 @@ Loads: `.opencode/context/core/standards/code-quality.md`
 <!-- Context: development/react-patterns | Priority: high -->
 ```
 
-Loads: `.opencode/context/development/react-patterns.md`
+Loads: `.opencode/context/ui/web/react-patterns.md`
 
 ### Multiple Contexts
 

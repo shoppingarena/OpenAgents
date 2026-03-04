@@ -1,3 +1,5 @@
+<!-- Context: core/context-system | Priority: critical | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Context System
 
 **Purpose**: Minimal, concern-based knowledge organization for AI agents
@@ -432,8 +434,17 @@ Data:     development/data/nosql-patterns/mongodb.md
 ## Quick Commands
 
 ```bash
-/context harvest              # Clean up summaries
-/context extract {source}     # From docs/code
-/context organize {category}  # Restructure
-/context update {what}        # When APIs change
+/context                      # Quick scan, suggest actions
+/context harvest              # Clean up summaries → permanent context
+/context extract {source}     # From docs/code/URLs
+/context organize {category}  # Restructure flat files → function folders
+/context update {what}        # When APIs/frameworks change
+/context migrate              # Move global project-intelligence → local project
+/context create {category}    # Create new context category
+/context error {error}        # Add recurring error to knowledge base
+/context compact {file}       # Minimize verbose file to MVI format
+/context map [category]       # View context structure
+/context validate             # Check integrity, references, sizes
 ```
+
+**All operations show a preview of what will be created/moved/deleted before asking for approval.**

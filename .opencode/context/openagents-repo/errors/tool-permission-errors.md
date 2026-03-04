@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/errors | Priority: medium | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Tool Permission Errors
 
 **Purpose**: Diagnose and fix tool permission issues in agents
@@ -31,7 +33,7 @@ Agent has tool **disabled** or **denied** in frontmatter:
 tools:
   bash: false    # ← Tool disabled
 
-permissions:
+permission:
   bash:
     "*": "deny"  # ← Explicitly denied
 ```
@@ -196,7 +198,7 @@ tools:
 
 ## Verification Checklist
 
-After fixing tool permissions:
+After fixing tool permission:
 
 - [ ] Agent frontmatter has correct `tools:` configuration?
 - [ ] Prompt emphasizes allowed tools in critical rules section?
@@ -222,4 +224,4 @@ After fixing tool permissions:
 - `guides/testing-subagents.md` - How to test subagents
 - `examples/subagent-prompt-structure.md` - Prompt structure with tool emphasis
 
-**Reference**: `.opencode/agent/ContextScout.md` (lines 14-28, tool configuration)
+**Reference**: `.opencode/agent/subagents/core/contextscout.md` (tool configuration)

@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/guides | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Guide: Profile Validation
 
 **Purpose**: Ensure installation profiles include all appropriate components  
@@ -27,7 +29,7 @@ Profiles are pre-configured component bundles in `registry.json` that users inst
 // ✅ Agent exists in components
 {
   "id": "devops-specialist",
-  "path": ".opencode/agent/development/devops-specialist.md"
+  "path": ".opencode/agent/subagents/development/devops-specialist.md"
 }
 
 // ❌ But NOT in developer profile
@@ -97,7 +99,6 @@ cat registry.json | jq '.profiles.full.components[] | select(. == "agent:your-ag
 **Include**:
 - Core agents (openagent, opencoder)
 - Development specialist subagents (frontend, devops)
-- OpenImplementer (openimplementer - lightweight implementation agent)
 - All code subagents (tester, reviewer, coder-agent, build-agent)
 - Dev commands (commit, test, validate-repo, analyze-patterns)
 - Dev context (standards/code, standards/tests, workflows/*)
@@ -115,7 +116,7 @@ cat registry.json | jq '.profiles.full.components[] | select(. == "agent:your-ag
 - Content specialists (copywriter, technical-writer)
 - Data specialists (data-analyst)
 - Image tools (gemini, image-specialist)
-- Notification tools (telegram, notify)
+- Notification tools (notify)
 
 **Exclude**:
 - Development specialists
@@ -330,7 +331,7 @@ Add profile validation to CI:
 | data          | ❌        | ❌        | ✅       | ✅   | ✅       |
 | meta          | ❌        | ❌        | ❌       | ❌   | ✅       |
 
-*Note: Development category includes both agents (opencoder, openimplementer) and specialist subagents (frontend, devops)
+*Note: Development category includes agents (opencoder) and specialist subagents (frontend, devops)
 
 ---
 

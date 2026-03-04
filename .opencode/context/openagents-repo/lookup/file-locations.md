@@ -1,3 +1,5 @@
+<!-- Context: openagents-repo/lookup | Priority: high | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Lookup: File Locations
 
 **Purpose**: Quick reference for finding files
@@ -120,20 +122,14 @@ README.md                            # Main documentation
 ```
 .opencode/agent/core/openagent.md
 .opencode/agent/core/opencoder.md
-```
-
-### Meta Agents
-
-```
 .opencode/agent/meta/system-builder.md
 ```
 
 ### Development Agents
 
 ```
-.opencode/agent/development/frontend-specialist.md
-.opencode/agent/development/devops-specialist.md
-.opencode/agent/core/openimplementer.md
+.opencode/agent/subagents/development/frontend-specialist.md
+.opencode/agent/subagents/development/devops-specialist.md
 ```
 
 ### Content Agents
@@ -146,11 +142,11 @@ README.md                            # Main documentation
 ### Key Subagents
 
 ```
-.opencode/agent/TestEngineer.md
-.opencode/agent/CodeReviewer.md
-.opencode/agent/CoderAgent.md
-.opencode/agent/TaskManager.md
-.opencode/agent/DocWriter.md
+.opencode/agent/subagents/code/test-engineer.md
+.opencode/agent/subagents/code/reviewer.md
+.opencode/agent/subagents/code/coder-agent.md
+.opencode/agent/subagents/core/task-manager.md
+.opencode/agent/subagents/core/documentation.md
 ```
 
 ### Core Context
@@ -160,7 +156,7 @@ README.md                            # Main documentation
 .opencode/context/core/standards/documentation.md
 .opencode/context/core/standards/test-coverage.md
 .opencode/context/core/standards/security-patterns.md
-.opencode/context/core/workflows/task-delegation.md
+.opencode/context/core/workflows/task-delegation-basics.md
 .opencode/context/core/workflows/code-review.md
 ```
 
@@ -201,9 +197,8 @@ evals/framework/src/types/            # TypeScript types
 ```
 
 **Examples**:
-- `.opencode/agent/core/openagent.md`
-- `.opencode/agent/development/frontend-specialist.md`
-- `.opencode/agent/TestEngineer.md`
+- `.opencode/agent/subagents/development/frontend-specialist.md`
+- `.opencode/agent/subagents/code/test-engineer.md`
 
 ### Context
 
@@ -213,7 +208,7 @@ evals/framework/src/types/            # TypeScript types
 
 **Examples**:
 - `.opencode/context/core/standards/code-quality.md`
-- `.opencode/context/development/react-patterns.md`
+- `.opencode/context/ui/web/react-patterns.md`
 - `.opencode/context/content-creation/principles/copywriting-frameworks.md`
 
 ### Tests

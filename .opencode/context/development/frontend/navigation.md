@@ -1,42 +1,37 @@
+<!-- Context: development/navigation | Priority: critical | Version: 1.0 | Updated: 2026-02-15 -->
+
 # Frontend Development Navigation
 
 **Purpose**: Client-side development patterns
 
-**Status**: 🚧 Placeholder - Content coming soon
-
 ---
 
-## Planned Structure
+## Structure
 
 ```
 frontend/
 ├── navigation.md
-│
-├── react/
-│   ├── navigation.md
-│   ├── hooks-patterns.md
-│   ├── component-architecture.md
-│   ├── performance.md
-│   └── tanstack/
-│       ├── query-patterns.md
-│       ├── router-patterns.md
-│       └── table-patterns.md
-│
-├── vue/
-│   └── navigation.md
-│
-└── state-management/
+├── when-to-delegate.md
+└── react/
     ├── navigation.md
-    ├── context-patterns.md
-    ├── zustand-patterns.md
-    └── redux-patterns.md
+    └── react-patterns.md
 ```
 
 ---
 
-## For Now
+## Quick Routes
 
-Use specialized navigation: `../ui-navigation.md`
+| Task | Path |
+|------|------|
+| **When to delegate** | `when-to-delegate.md` |
+| **React patterns** | `react/react-patterns.md` |
+| **React navigation** | `react/navigation.md` |
+
+---
+
+## By Framework
+
+**React** → `react/` - Modern React patterns, hooks, component design
 
 ---
 
