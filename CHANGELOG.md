@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+## [0.7.2] - 2026-07-03
+
+### Changes
+- fix(install): point installer URLs to shoppingarena/OpenAgents
+
 ## [0.7.1] - 2026-01-30
 
 ### Changes
