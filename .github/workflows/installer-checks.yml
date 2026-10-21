@@ -15,6 +15,9 @@ on:
       - 'update.sh'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   shellcheck:
     name: ShellCheck Analysis
@@ -22,10 +25,12 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
       
       - name: Run ShellCheck on install.sh
-        uses: ludeeus/action-shellcheck@master
+        uses: ludeeus/action-shellcheck@00b27aa7cb85167568cb48a3838b75f4265f2bca # master (resolved 2026-07-15)
         with:
           scandir: '.'
           additional_files: 'install.sh update.sh'
@@ -43,7 +48,9 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
       
       - name: Check install.sh syntax
         run: bash -n install.sh
@@ -73,7 +80,9 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
       
       - name: Install jq (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
@@ -102,7 +111,9 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
       
       - name: Install jq (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
@@ -133,7 +144,9 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
       
       - name: Install jq (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
@@ -162,7 +175,9 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
       
       - name: Install dependencies
         run: sudo apt-get install -y jq curl
